@@ -5,9 +5,8 @@ export default async function handler(req: NextApiRequest, res: any) {
   const version = process.env.VERSION || 'v1';
   const baseURL = process.env.BASE_URL || 'http://localhost:3000';
   const authToken = req.headers.cookie?.split('%22')[1];
-
   try {
-    const response = await axios.post(`${baseURL}${version}/asset/updateNFT`, req.body, {
+    const response = await axios.get(`${baseURL}${version}/asset/getAssets/active`, {
       headers: {
         ContentType: 'application/json',
         Authorization: 'Bearer ' + authToken,

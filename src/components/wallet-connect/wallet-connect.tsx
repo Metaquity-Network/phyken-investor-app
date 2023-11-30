@@ -15,11 +15,29 @@ export const Connect = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const loginAPI = async (loginRequest: any) => {
-    const response = await axios.post(`/api/auth/login`, loginRequest);
-    if (response.status === 200) {
-      router.push(getRedirect());
+    try {
+      const response = await axios.post(`/api/auth/login`, loginRequest);
+      if (response.status === 200) {
+        const userResponse = await axios.get(`/api/user/getUserDetails`);
+        if (userResponse.data.userInfo) {
+          router.push('/');
+        } else {
+          router.push('/user');
+        }
+      }
+    } catch (error) {
+      logout();
+      console.error(error);
     }
-    router.push('/');
+  };
+
+  const logout = async () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    const res = await axios.post('/api/auth/logout');
+    if (res.status === 200) {
+      router.push('/login');
+    }
   };
 
   const getRedirect = () => {
@@ -57,7 +75,7 @@ export const Connect = () => {
           authType: user.typeOfLogin,
           tokenID: user.idToken,
           walletAddress: userAccount,
-          userRole: 'ORIGINATOR',
+          userRole: 'BUYER',
         });
       }
     } catch (error) {

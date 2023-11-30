@@ -32,27 +32,27 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const sidebarMenu = [
     {
-      name: 'Dashboard',
+      name: 'My Dashboard',
       icon: 'FaHome',
       pathname: '/',
     },
     {
-      name: 'My Assets',
+      name: 'Opportunities',
       icon: 'FaDatabase',
       pathname: '/assets',
     },
     {
-      name: 'Wallet',
+      name: 'My Investments',
       icon: 'FaWallet',
       pathname: '/wallet',
     },
     {
-      name: 'Licenses',
+      name: 'Impact Dashboard',
       icon: 'FaIdCardAlt',
       pathname: '/upload-license',
     },
     {
-      name: 'Transactions',
+      name: 'Manage funds',
       icon: 'FaExchangeAlt',
       pathname: '/transactions',
       notification: 2,

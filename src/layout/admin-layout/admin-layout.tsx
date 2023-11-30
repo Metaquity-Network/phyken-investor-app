@@ -10,9 +10,9 @@ export default function AdminLayout({ children }: PropsWithChildren) {
     <>
       <Head>
         <title> Metaquity network </title>
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta name="description" content="Built with Next.js and TypeScript" />
-        <link rel="shortcut icon" href="/image/logo/logo.png" />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="assets/login/metaquity-logo.png" />
       </Head>
 
       <div className="dark:bg-boxdark-2 dark:text-bodydark">

@@ -1,11 +1,16 @@
 'use client';
 
-import type { NextPage } from 'next';
+import type { Metadata, NextPage } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import SignInForm from '@/src/components/sign-in-form/sign-in-form';
 import { useEffect } from 'react';
 import useLocalStorage from '@/src/hooks/useLocalStorage';
+
+export const metadata: Metadata = {
+  title: 'Login',
+  description: 'Login page',
+};
 
 const Login: NextPage = () => {
   const [storedValue, setValue, clearLocalStorage, clearAllLocalStorage] = useLocalStorage('myKey', 'default');

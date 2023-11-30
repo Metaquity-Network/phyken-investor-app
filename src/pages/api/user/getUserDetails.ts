@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: any) {
   const authToken = req.headers.cookie?.split('%22')[1];
 
   try {
-    const response = await axios.post(`${baseURL}${version}/asset/updateNFT`, req.body, {
+    const response = await axios.get(`${baseURL}${version}/user`, {
       headers: {
         ContentType: 'application/json',
         Authorization: 'Bearer ' + authToken,
@@ -15,8 +15,7 @@ export default async function handler(req: NextApiRequest, res: any) {
     });
     const data = response.data;
     res.status(200).json(data);
-  } catch (error: any) {
-    console.log('error', error.response.data);
-    res.status(500).json(error.response.data);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user details' });
   }
 }

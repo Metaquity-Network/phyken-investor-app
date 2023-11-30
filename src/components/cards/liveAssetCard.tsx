@@ -8,20 +8,19 @@ import { useRouter } from 'next/router';
 const LiveAssetCard: React.FC<LiveAssetCardProps> = (cardProps) => {
   const router = useRouter();
   const shortDescription = (description: string) => {
-    const maxLength = 60;
-
+    console.log('description', description.length);
+    const maxLength = 100;
     if (description.length <= maxLength) {
       return description;
     } else {
-      return description.slice(0, maxLength) + '..';
+      return description.slice(0, maxLength) + '....';
     }
   };
 
   return (
     <div className="rounded-lg border border-stroke bg-gray-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div>
-
-      <Image width={340} height={188} src={cardProps.image} alt="Cards" />
+        <img className="w-full" src={cardProps.image} alt="Cards" />
       </div>
 
       <div className="px-6 pb-2 border-b-[1px]">
@@ -29,11 +28,13 @@ const LiveAssetCard: React.FC<LiveAssetCardProps> = (cardProps) => {
           <div>{cardProps.title}</div>
         </h4>
         <p>{shortDescription(cardProps.description)}</p>
-        {cardProps.tags.map((tag: string, index: number) => (
-          <span className="border rounded-full bg-secondary px-2 mr-2 text-black" key={index}>
-            {tag}{' '}
-          </span>
-        ))}
+        {cardProps.tags.length > 0
+          ? cardProps.tags.map((tag: string, index: number) => (
+              <span className="border rounded-full bg-secondary px-2 mr-2 text-black" key={index}>
+                {tag}{' '}
+              </span>
+            ))
+          : null}
       </div>
       <div className="p-4">
         <p className="pb-2 font-bold">${numberToCommaSeparator(cardProps.lockedValue)} funded</p>
