@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 const LiveAssetCard: React.FC<LiveAssetCardProps> = (cardProps) => {
   const router = useRouter();
   const shortDescription = (description: string) => {
-    console.log('description', description.length);
     const maxLength = 100;
     if (description.length <= maxLength) {
       return description;
@@ -20,7 +19,7 @@ const LiveAssetCard: React.FC<LiveAssetCardProps> = (cardProps) => {
   return (
     <div className="rounded-lg border border-stroke bg-gray-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div>
-        <img className="w-full" src={cardProps.image} alt="Cards" />
+        <img className="w-full h-[300px]" src={cardProps.image} alt="Cards" />
       </div>
 
       <div className="px-6 pb-2 border-b-[1px]">

@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { convertNumberToMonthsAndYears } from '@/src/helper/numberToYearsAndMonths';
 import ProgressBar from '@/src/components/progress/progressBar';
 import Dropdown from '@/src/components/Dropdown/dropdown';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 const FractionalizeAsset: React.FC = () => {
   const router = useRouter();
@@ -66,11 +67,20 @@ const FractionalizeAsset: React.FC = () => {
                       <h2 className="font-bold text-3xl">{assetDetails?.name}</h2>
                     </div>
 
-                    <p className="text-gray-700 mb-4">India's logistics pioneer is going green.</p>
+                    <p className="text-gray-700 mb-4">India's pioneer in on going green assets.</p>
 
                     {/* Bottom div */}
-                    <div className="mt-18">
+                    <div className="mt-18 flex flex-row">
                       <p className="text-success font-bold text-xl">Asset Score: 757/800</p>
+                      <div className="p-1">
+                        <div className="group relative inline-block">
+                          <FaQuestionCircle />
+                          <div className="absolute bottom-full left-1/2 z-20 mb-3 -translate-x-1/2 whitespace-nowrap rounded bg-black py-1.5 px-4.5 text-sm font-medium text-white opacity-0 group-hover:opacity-100">
+                            <span className="absolute bottom-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm bg-black"></span>
+                            Phyken Verified
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <img className="w-1/3 h-auto object-cover mr-4" src={assetDetails?.assetImageURL} alt="Image" />

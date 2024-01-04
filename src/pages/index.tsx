@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
   const User = () => {
     if (userDetails) {
-      return <p>Welcome Back, {userDetails.username.split(' ')[0]}</p>;
+      return <p>Welcome Back, Jones</p>;
     }
     return null;
   };
