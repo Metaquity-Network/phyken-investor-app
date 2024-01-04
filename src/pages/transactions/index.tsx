@@ -13,29 +13,7 @@ const Transactions: React.FC = () => {
   const activeClasses = 'bg-primary text-white hover:opacity-100';
   const inactiveClasses = 'bg-gray dark:bg-meta-4 text-black dark:text-white';
 
-  const assetList: AssetList[] = [
-    {
-      assetId: '#123456',
-      category: 'Crypto',
-      name: 'Lorem',
-      price: '$500',
-      nft: 'NFT',
-    },
-    {
-      assetId: '#123456',
-      category: 'Crypto',
-      name: 'Lorem',
-      price: '$500',
-      nft: 'NFT',
-    },
-    {
-      assetId: '#123456',
-      category: 'Crypto',
-      name: 'Lorem',
-      price: '$500',
-      nft: 'NFT',
-    },
-  ];
+  const assetList: AssetList[] = [];
   return (
     <>
       <AdminLayout>
@@ -97,30 +75,30 @@ const Transactions: React.FC = () => {
                       <p className="text-l font-bold">NFT</p>
                     </div>
                   </div>
-                  {assetList.map((asset: AssetList, index: number) => {
+                  {/* {assetList.map((asset: AssetList, index: number) => {
                     return (
-                      <div
-                        key={index}
-                        className="grid grid-cols-10 py-2 border-b-2 border-graydark border-opacity-20 dark:border-gray-3 dark:opacity-3"
-                      >
-                        <div className="col-span-2">
-                          <p className="text-sm px-4">{asset.assetId}</p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="text-sm">{asset.name}</p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="text-sm">{asset.category}</p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="text-sm ">{asset.price}</p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="text-sm">{asset.nft}</p>
-                        </div>
-                      </div>
+                      // <div
+                      //   key={index}
+                      //   className="grid grid-cols-10 py-2 border-b-2 border-graydark border-opacity-20 dark:border-gray-3 dark:opacity-3"
+                      // >
+                      //   <div className="col-span-2">
+                      //     <p className="text-sm px-4">{asset.assetId}</p>
+                      //   </div>
+                      //   <div className="col-span-2">
+                      //     <p className="text-sm">{asset.name}</p>
+                      //   </div>
+                      //   <div className="col-span-2">
+                      //     <p className="text-sm">{asset.category}</p>
+                      //   </div>
+                      //   <div className="col-span-2">
+                      //     <p className="text-sm ">{asset.price}</p>
+                      //   </div>
+                      //   <div className="col-span-2">
+                      //     <p className="text-sm">{asset.nft}</p>
+                      //   </div>
+                      // </div>
                     );
-                  })}
+                  })} */}
                 </div>
               </div>
               <div className={`leading-relaxed ${openTab === 2 ? 'block' : 'hidden'}`}>
