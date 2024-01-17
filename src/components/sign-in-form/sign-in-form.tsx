@@ -21,8 +21,8 @@ const SignInForm: NextPage = () => {
 
       <div className="relative text-sm leading-[26px] font-inter text-left">
         <span className="text-graydark">{`Questions? Email us at `}</span>
-        <a className="text-primary" href="mailto:support@metaquity.com">
-          support@metaquity.com
+        <a className="text-primary" href="mailto:hello@metaquity.xyz">
+          hello@metaquity.xyz
         </a>
       </div>
     </form>
