@@ -54,6 +54,14 @@ const Home: NextPage = () => {
                 <div>Finish KYC</div>
               </button>
             </div>
+            <div className="pt-3 pl-3">
+              <button
+                className="flex flex-row w-full h-10 py-2 justify-center rounded-full bg-primary hover:bg-opacity-90 p-3 font-medium text-gray gap-3"
+                onClick={() => router.push('create-did')}
+              >
+                <div>Create DID</div>
+              </button>
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-3 2xl:gap-7.5"></div>
