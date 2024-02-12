@@ -3,6 +3,7 @@ import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { ApiPromise, WsProvider, Keyring } from '@polkadot/api';
 import type { Registry } from '@polkadot/types/types';
 import { formatBalance } from '@polkadot/util';
+import { encodeAddress, decodeAddress } from '@polkadot/keyring';
 
 export default class PolkadotRPC {
   private provider: SafeEventEmitterProvider;
@@ -37,6 +38,12 @@ export default class PolkadotRPC {
   getAccounts = async (): Promise<any> => {
     const keyPair = await this.getPolkadotKeyPair();
     return keyPair.address;
+  };
+
+  getKiltAccounts = async (): Promise<any> => {
+    const keyPair = await this.getPolkadotKeyPair();
+    const address38 = encodeAddress(decodeAddress(keyPair.address), 38);
+    return address38;
   };
 
   getBalance = async (): Promise<any> => {

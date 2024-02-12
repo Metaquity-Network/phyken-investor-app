@@ -9,6 +9,7 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@kiltprotocol/sdk-js": "^0.34.0",
     "@polkadot/api": "^10.10.1",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/aws-sdk": "^2.7.0",
