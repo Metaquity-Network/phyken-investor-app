@@ -16,10 +16,8 @@ const Transactions: React.FC = () => {
 
   useEffect(() => {
     const polkaLoad = async () => {
-      showToast('Connecting to blockchain', { type: 'info' });
       if (!web3auth) {
         console.log('web3auth not initialized yet');
-        showToast('Unable to connect to blockchain', { type: 'error' });
         return;
       }
       await web3auth.initModal();
