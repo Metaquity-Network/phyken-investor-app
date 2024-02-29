@@ -6,44 +6,28 @@ import * as Kilt from '@kiltprotocol/sdk-js';
 import * as utils from './kilt-utils';
 import { useWeb3Auth } from '@/src/hooks/useWeb3Auth';
 import PolkadotRPC from '@/src/context/wallet/polkadotRPC';
-import { encodeAddress, decodeAddress } from '@polkadot/keyring';
+import { ToastContainer } from 'react-toastify';
+import { useToast } from '@/src/hooks/useToast';
 
 const Transactions: React.FC = () => {
-  // const { web3auth, provider } = useWeb3Auth();
-  // const [polkadotKeyPair, setPolkadotKeyPair] = useState();
-
-  // useEffect(() => {
-  //   const polkaLoad = async () => {
-  //     // if (!web3auth) {
-  //     //   console.log('web3auth not initialized yet');
-  //     //   return;
-  //     // }
-  //     await web3auth?.initModal();
-  //     if (web3auth?.provider) {
-  //       const rpc = new PolkadotRPC(web3auth.provider);
-  //     }
-  //   };
-
-  //   polkaLoad();
-  // }, [web3auth, provider]);
-
+  const { showToast } = useToast();
   const { web3auth, provider } = useWeb3Auth();
-  const [polkadotKeyPair, setPolkadotKeyPair] = useState();
+  const [polkadotKeyPair, setPolkadotKeyPair] = useState<Kilt.KiltKeyringPair>();
 
   useEffect(() => {
     const polkaLoad = async () => {
+      showToast('Connecting to blockchain', { type: 'info' });
       if (!web3auth) {
         console.log('web3auth not initialized yet');
+        showToast('Unable to connect to blockchain', { type: 'error' });
         return;
       }
       await web3auth.initModal();
       if (web3auth.provider) {
         const rpc = new PolkadotRPC(web3auth.provider);
-        const balance = await rpc.getBalance();
-        console.log(balance);
         const keypair = await rpc.getPolkadotKeyPair();
-        console.log(keypair);
         setPolkadotKeyPair(keypair);
+        showToast('Connected to blockchain', { type: 'info' });
       }
     };
 
@@ -51,30 +35,33 @@ const Transactions: React.FC = () => {
   }, [web3auth, provider]);
 
   const createFullDid = async () => {
-    const conn = await Kilt.connect(process.env.KILT_WSS_ADDRESS!);
-    console.log(conn);
-    const api = Kilt.ConfigService.get('api');
-    const kiltAddress = encodeAddress(decodeAddress((polkadotKeyPair as any).address), 38);
-    const authenticationKey = utils.generateAuthenticationKey() as any;
-    // Generate the DID-signed creation tx and submit it to the blockchain with the specified account.
-    // The submitter account parameter, ensures that only an entity authorized by the DID subject
-    // can submit the tx to the KILT blockchain.
-    const fullDidCreationTx = await Kilt.Did.getStoreTx(
-      {
-        authentication: [authenticationKey],
-      },
-      kiltAddress,
-      utils.getKeypairTxSigningCallback(authenticationKey),
-    );
-    console.log(authenticationKey);
-    console.log(fullDidCreationTx);
-    // await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, polkadotKeyPair as any);
-
-    // // The new information is fetched from the blockchain and returned.
-    // const fullDid = Kilt.Did.getFullDidUriFromKey(polkadotKeyPair as any);
-    // const encodedUpdatedDidDetails = await api.call.did.query(Kilt.Did.toChain(fullDid));
-    // const kiltDocument = Kilt.Did.linkedInfoFromChain(encodedUpdatedDidDetails).document;
-    // console.log('kiltDocument', kiltDocument);
+    await Kilt.connect(process.env.KILT_WSS_ADDRESS!);
+    const api = await Kilt.ConfigService.get('api');
+    const fullDid = Kilt.Did.getFullDidUriFromKey(polkadotKeyPair as any);
+    const encodedUpdatedDidDetails = await api.call.did.query(Kilt.Did.toChain(fullDid));
+    const kiltDocument = Kilt.Did.linkedInfoFromChain(encodedUpdatedDidDetails).document;
+    if (!kiltDocument) {
+      const paymentAccountKey = utils.getPaymentAccountKey();
+      const privateKey = await web3auth?.provider?.request({ method: 'private_key' });
+      const keyring = new Kilt.Utils.Keyring({
+        ss58Format: 38,
+        type: 'sr25519',
+      });
+      const userKiltKeyPair: Kilt.KeyringPair = keyring.addFromUri('0x' + privateKey);
+      const fullDidCreationTx = await Kilt.Did.getStoreTx(
+        {
+          authentication: [userKiltKeyPair as any],
+        },
+        paymentAccountKey.address,
+        utils.getKeypairTxSigningCallback(userKiltKeyPair as any),
+      );
+      await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, paymentAccountKey);
+      console.log(fullDidCreationTx);
+      showToast('User DID created', { type: 'success' });
+    } else {
+      console.log('User DID already exists');
+      showToast('User DID already exists', { type: 'info' });
+    }
   };
 
   return (
@@ -97,6 +84,7 @@ const Transactions: React.FC = () => {
             <div>Create Full DID</div>
           </button>
         </div>
+        <ToastContainer />
       </AdminLayout>
     </>
   );
