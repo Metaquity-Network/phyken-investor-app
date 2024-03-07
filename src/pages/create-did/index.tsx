@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '@/src/layout';
 import * as Kilt from '@kiltprotocol/sdk-js';
-import * as utils from './kilt-utils';
+import * as utils from '../../helper/kilt-utils';
 import { useWeb3Auth } from '@/src/hooks/useWeb3Auth';
 import PolkadotRPC from '@/src/context/wallet/polkadotRPC';
 import { ToastContainer } from 'react-toastify';
